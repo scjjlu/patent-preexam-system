@@ -82,6 +82,7 @@ def main():
 
         # ── 4. Suppress Streamlit email/telemetry prompt ─────────
         os.environ["STREAMLIT_GATHER_USAGE_STATS"] = "false"
+        os.environ["STREAMLIT_EMAIL"] = ""
         # Also create config file to prevent the first-run email prompt
         streamlit_conf_dir = Path.home() / ".streamlit"
         streamlit_conf_dir.mkdir(exist_ok=True)
