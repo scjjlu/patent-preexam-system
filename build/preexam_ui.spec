@@ -11,10 +11,10 @@ from pathlib import Path
 ROOT = Path.cwd().resolve()
 
 # ── Collect Streamlit's data files (static assets, proto, etc.) ──
-from PyInstaller.utils.hooks import collect_data_files, collect_all
+from PyInstaller.utils.hooks import collect_data_files, collect_all, copy_metadata
 
 # These return lists of (source, dest) tuples
-st_datas = collect_data_files("streamlit")
+st_datas = collect_data_files("streamlit") + copy_metadata("streamlit")
 
 block_cipher = None
 
