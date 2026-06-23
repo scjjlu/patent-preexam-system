@@ -14,7 +14,7 @@ ROOT = Path.cwd().resolve()
 from PyInstaller.utils.hooks import collect_data_files, collect_all, copy_metadata
 
 # These return lists of (source, dest) tuples
-st_datas = collect_data_files("streamlit") + copy_metadata("streamlit")
+st_datas = collect_data_files("streamlit") + copy_metadata("streamlit") + copy_metadata("altair") + copy_metadata("markupsafe")
 
 block_cipher = None
 
