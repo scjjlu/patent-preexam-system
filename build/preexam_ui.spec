@@ -10,10 +10,13 @@
 #
 
 import sys
+import os
 from pathlib import Path
 
-# ── Project root (where this spec lives is build/, so parent is root)
-ROOT = Path(__file__).resolve().parent.parent
+# ── Project root
+# NOTE: __file__ is NOT available in PyInstaller spec files.
+# Path.cwd() works because pyinstaller is always run from project root.
+ROOT = Path.cwd().resolve()
 
 # ── Block cipher (disabled for speed)
 block_cipher = None
@@ -41,10 +44,6 @@ a = Analysis(
         (str(ROOT / "src"),            "src"),
         (str(ROOT / "pyproject.toml"), "."),
         (str(ROOT / "setup.cfg"),      "."),
-
-        # ── Streamlit static assets ───────────────────────────────
-        # These are usually inside site-packages/streamlit/static
-        # but PyInstaller's hook may not auto-detect them all.
     ],
 
     # ── Hidden imports ───────────────────────────────────────────
@@ -145,7 +144,7 @@ a = Analysis(
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 
-# ── Executable: GUI version (no console window) ──────────────────
+# ── Executable ───────────────────────────────────────────────────
 exe = EXE(
     pyz,
     a.scripts,
@@ -168,10 +167,3 @@ exe = EXE(
     entitlements_file=None,
     icon=None,
 )
-
-
-# ── COLLECT everything into dist/ ────────────────────────────────
-# PyInstaller >= 6.x handles this inside EXE with onefile=False
-# If using onefile=True, add this:
-# coll = COLLECT(exe, a.binaries, a.zipfiles, a.datas,
-#                strip=False, upx=True, upx_exclude=[], name="专利预审案卷辅助审查系统")
