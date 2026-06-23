@@ -14,14 +14,17 @@ ROOT = Path.cwd().resolve()
 from PyInstaller.utils.hooks import collect_data_files, collect_all, copy_metadata
 
 # These return lists of (source, dest) tuples
-st_datas = collect_data_files("streamlit") + copy_metadata("streamlit") + copy_metadata("altair") + copy_metadata("markupsafe")
+st_collected = collect_all("streamlit")
+st_datas = st_collected[0] + copy_metadata("streamlit") + copy_metadata("altair") + copy_metadata("markupsafe")
+st_binaries = st_collected[1]
+st_hidden = st_collected[2]
 
 block_cipher = None
 
 a = Analysis(
     [str(ROOT / "run_preexam.py")],
     pathex=[str(ROOT), str(ROOT / "src")],
-    binaries=[],
+    binaries=st_binaries,
     datas=[
         # Application data
         (str(ROOT / "rules"),          "rules"),
@@ -70,6 +73,7 @@ a = Analysis(
         "streamlit.runtime.media_file_manager",
         "streamlit.runtime.uploaded_file_manager",
         "streamlit.runtime.scriptrunner",
+        "streamlit.runtime.scriptrunner.magic_funcs",
         "streamlit.runtime.scriptrunner.script_cache",
         "streamlit.runtime.scriptrunner.script_runner",
         "streamlit.runtime.websocket",
@@ -169,7 +173,7 @@ a = Analysis(
         "textwrap",
         "copy",
         "pprint",
-    ],
+    ] + st_hidden,
     excludes=[
         "tkinter",
         "matplotlib",
