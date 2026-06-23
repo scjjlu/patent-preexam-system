@@ -88,7 +88,7 @@ def main():
             sys.exit(1)
 
         # ── 1. Chdir to MEIPASS so relative paths resolve ────────
-        os.chdir(str(BASE))
+        os.chdir(str(Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else BASE))
         _log(f"CWD → {BASE}")
 
         # ── 2. Add src/ to Python path ───────────────────────────
