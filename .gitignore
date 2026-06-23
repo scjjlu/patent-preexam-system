@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+*.so
+
+# PyInstaller output
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Case data (input files, generated output)
+# These are real patent case files — not included in repo
+cases/*/input/
+cases/*/extracted/
+cases/*/parsed/
+cases/*/prompts/
+cases/*/output/
+cases/*/logs/
+cases/_incoming/
+*.zip
+
+# But keep directory structure
+!cases/*/.gitkeep
+!.gitkeep

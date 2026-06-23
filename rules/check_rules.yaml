@@ -1,0 +1,73 @@
+# 规则化审查引擎 — 规则定义
+# 每条规则包含：id、名称、类别、严重等级、描述、是否需人工确认
+
+rules:
+  R001:
+    name: "请求书应勾选早日公布"
+    category: "请求书检查"
+    severity: "medium"
+    description: "检查发明专利请求书是否已勾选「请求早日公布该专利申请」"
+    manual_review: false
+
+  R002:
+    name: "应提交实质审查请求书"
+    category: "请求书检查"
+    severity: "high"
+    description: "检查是否已提交实质审查请求书（110401.xml）"
+    manual_review: false
+
+  R003:
+    name: "不应声明同日申请实用新型"
+    category: "请求书检查"
+    severity: "manual"
+    description: "快速预审案件不应同时申请实用新型，若声明则需人工确认"
+    manual_review: true
+
+  C001:
+    name: "承诺书文件应存在"
+    category: "承诺书检查"
+    severity: "high"
+    description: "快速预审需提交承诺书"
+    manual_review: false
+
+  C002:
+    name: "承诺书为图片扫描件时盖章和日期需人工确认"
+    category: "承诺书检查"
+    severity: "manual"
+    description: "图片型承诺书无法自动识别签章和日期，需人工确认"
+    manual_review: true
+
+  X001:
+    name: "CNIPA XML 编码映射正确性检查"
+    category: "文件完整性检查"
+    severity: "high"
+    description: "检查所有 XML 文件编码是否在已知映射表中"
+    manual_review: false
+
+  Q001:
+    name: "权利要求编号连续性检查"
+    category: "权利要求检查"
+    severity: "medium"
+    description: "检查权利要求编号是否连续（无跳号）"
+    manual_review: false
+
+  Q002:
+    name: "权利要求引用关系基础检查"
+    category: "权利要求检查"
+    severity: "high"
+    description: "检查从属权利要求引用的权利要求是否存在"
+    manual_review: false
+
+  D001:
+    name: "说明书明显术语冲突检查"
+    category: "说明书检查"
+    severity: "medium"
+    description: "检查说明书中是否存在明显术语冲突（如技术领域前后矛盾）"
+    manual_review: false
+
+  D002:
+    name: "说明书重复段落/孤立残句提示"
+    category: "说明书检查"
+    severity: "low"
+    description: "检查说明书中重复段落和过短段落（<15 字符）"
+    manual_review: false

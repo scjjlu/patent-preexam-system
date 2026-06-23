@@ -1,0 +1,27 @@
+# 承诺书审查规则
+# 第一阶段只做文件识别与初步标记
+
+rules:
+  signature_check:
+    - condition: "OCR 无法确定是否存在盖章/签字"
+      action: "标记为'需人工确认'"
+      severity: "warning"
+    - condition: "明确检测到盖章"
+      action: "标记为'已盖章'"
+      severity: "info"
+    - condition: "明确检测到签字"
+      action: "标记为'已签字'"
+      severity: "info"
+
+  file_format:
+    - format: "pdf"
+      action: "尝试 OCR 提取文字"
+    - format: "zip"
+      action: "解压后查找承诺书文件"
+    - format: "jpg"
+    - format: "png"
+      action: "识别为图片型承诺书，标记需人工确认"
+
+  disclaimers:
+    - "承诺书 OCR 不稳定时，不得直接判定'未盖章'"
+    - "所有签章状态不确定时，统一标记为'需人工确认'"

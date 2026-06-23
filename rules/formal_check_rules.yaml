@@ -1,0 +1,32 @@
+# 形式审查规则
+# 第一阶段只做规则定义，第二阶段实现具体检查
+
+checks:
+  claims_numbering:
+    description: "权利要求项编号连续性检查"
+    enabled: false
+
+  claims_dependency:
+    description: "权利要求引用基础检查"
+    enabled: false
+
+  page_count:
+    description: "文件页数合理性检查"
+    enabled: false
+
+  file_completeness:
+    description: "五书文件完整性检查"
+    required_roles:
+      - "claims"
+      - "specification"
+      - "drawings"
+      - "abstract"
+    optional_roles:
+      - "request_form"
+      - "substantive_examination_request"
+
+  disclaimer:
+    - "三性结论不得写成最终授权结论"
+    - "统一使用'初步判断'措辞"
+    - '统一使用"基于当前案卷及已提供对比文件"'
+    - '统一使用"最终以国家知识产权局实质审查结果为准"'

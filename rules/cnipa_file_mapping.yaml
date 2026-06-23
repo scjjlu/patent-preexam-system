@@ -1,0 +1,34 @@
+# CNIPA XML 文件编码映射
+# 100001–100004: 五书
+# 110101: 请求书
+# 110401: 实审请求书
+#
+# 注意：
+# - 100003 是说明书附图（不是摘要）
+# - 100004 是说明书摘要（不是附图）
+
+file_types:
+  "100001":
+    name: "权利要求书"
+    role: "claims"
+    description: "Patent claims document defining the scope of protection"
+  "100002":
+    name: "说明书"
+    role: "specification"
+    description: "Patent specification/description document"
+  "100003":
+    name: "说明书附图"
+    role: "drawings"
+    description: "Drawings accompanying the specification"
+  "100004":
+    name: "说明书摘要"
+    role: "abstract"
+    description: "Abstract of the patent specification"
+  "110101":
+    name: "发明专利请求书"
+    role: "request_form"
+    description: "Invention patent request form"
+  "110401":
+    name: "实质审查请求书"
+    role: "substantive_examination_request"
+    description: "Substantive examination request form"
