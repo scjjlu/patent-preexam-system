@@ -30,21 +30,14 @@ jobs:
         run: |
           pyinstaller build/preexam_ui.spec --noconfirm
 
-      - name: Verify build
+      - name: Verify and list
         run: |
-          Get-ChildItem dist/ -Recurse
-
-      - name: Package as zip
-        run: |
-          Compress-Archive -Path "dist/preexam-review/*" -DestinationPath "preexam-windows.zip" -CompressionLevel Optimal
-          $s = (Get-Item "preexam-windows.zip").Length
-          Write-Host "Zip: $([math]::Round($s/1MB, 1)) MB"
+          Get-ChildItem dist/ -Recurse -Name
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: preexam-windows
-          path: preexam-windows.zip
+          path: dist/
           if-no-files-found: error
-          compression-level: 0
           retention-days: 30
