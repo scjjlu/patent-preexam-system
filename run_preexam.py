@@ -117,6 +117,11 @@ def main():
 
         # ── 9. Go! ──────────────────────────────────────────────
         sys.stdout.flush()
+
+        # ── 9. Monkey-patch credentials check to skip email prompt ──
+        import streamlit.runtime.credentials
+        streamlit.runtime.credentials.check_credentials = lambda: None
+        _log("Credentials check patched (email prompt disabled)")
         from streamlit.web import cli as stcli
         stcli.main()
 
