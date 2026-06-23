@@ -2,55 +2,29 @@
 #
 # PyInstaller spec: 专利快速预审案卷辅助审查系统 (Windows)
 #
-# Build (Windows, from project root):
-#     pyinstaller build/preexam_ui.spec --noconfirm
-#
-# Build (via GitHub Actions, automated):
-#     Push to GitHub; see .github/workflows/build-windows.yml
-#
 
 import sys
 import os
 from pathlib import Path
 
-# ── Project root
-# NOTE: __file__ is NOT available in PyInstaller spec files.
-# Path.cwd() works because pyinstaller is always run from project root.
+# Project root (CWD is project root when pyinstaller is invoked)
 ROOT = Path.cwd().resolve()
 
-# ── Block cipher (disabled for speed)
 block_cipher = None
 
-
-# ── Analysis ─────────────────────────────────────────────────────
 a = Analysis(
-    # Entry point
     [str(ROOT / "run_preexam.py")],
-
-    # Extra search paths
-    pathex=[
-        str(ROOT),
-        str(ROOT / "src"),
-    ],
-
+    pathex=[str(ROOT), str(ROOT / "src")],
     binaries=[],
-
-    # Data files bundled alongside the .exe
     datas=[
-
-        # ── Application data ──────────────────────────────────────
         (str(ROOT / "rules"),          "rules"),
         (str(ROOT / "templates"),      "templates"),
         (str(ROOT / "src"),            "src"),
         (str(ROOT / "pyproject.toml"), "."),
         (str(ROOT / "setup.cfg"),      "."),
     ],
-
-    # ── Hidden imports ───────────────────────────────────────────
-    # (modules that PyInstaller's static analysis might miss)
     hiddenimports=[
-
-        # Preexam system modules
+        # Preexam system
         "preexam",
         "preexam.cli",
         "preexam.config",
@@ -64,8 +38,7 @@ a = Analysis(
         "preexam.rules_engine",
         "preexam.report_generator",
         "preexam.case_id_extractor",
-
-        # Streamlit internals (commonly missed)
+        # Streamlit
         "streamlit",
         "streamlit.web.cli",
         "streamlit.web.bootstrap",
@@ -75,8 +48,7 @@ a = Analysis(
         "streamlit.proto",
         "streamlit.temporary_directory",
         "streamlit.user_info",
-
-        # Known third-party
+        # Third-party
         "yaml",
         "lxml",
         "lxml.etree",
@@ -95,14 +67,10 @@ a = Analysis(
         "pydeck",
         "toml",
         "watchdog",
-
-        # Streamlit file watcher
         "streamlit.watcher",
         "streamlit.watcher.polling_file_watcher",
         "streamlit.watcher.local_sources_watcher",
     ],
-
-    # ── Exclude unused bloat ─────────────────────────────────────
     excludes=[
         "tkinter",
         "matplotlib",
@@ -128,8 +96,6 @@ a = Analysis(
         "bokeh",
         "plotly",
     ],
-
-    # ── Hooks ────────────────────────────────────────────────────
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -139,12 +105,9 @@ a = Analysis(
     noarchive=False,
 )
 
-
-# ── Encoded Python archives ──────────────────────────────────────
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
-
-# ── Executable ───────────────────────────────────────────────────
+# Use English name for the EXE to avoid PowerShell path issues
 exe = EXE(
     pyz,
     a.scripts,
@@ -152,14 +115,14 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name="专利预审案卷辅助审查系统",
+    name="preexam-review",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True,        # Keep console visible for Streamlit logs
+    console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
